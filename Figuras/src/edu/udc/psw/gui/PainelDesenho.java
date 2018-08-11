@@ -2,9 +2,8 @@ package edu.udc.psw.gui;
 
 import javax.swing.JPanel;
 
+import edu.udc.psw.modelo.FabricaFormas;
 import edu.udc.psw.modelo.FormaGeometrica;
-import edu.udc.psw.modelo.Linha;
-import edu.udc.psw.modelo.Ponto2D;
 import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
 import edu.udc.psw.colecao.Iterador;
 import edu.udc.psw.colecao.ListaEncadeada;
@@ -18,9 +17,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.util.Scanner;
 
 public class PainelDesenho extends JPanel implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
@@ -58,29 +60,36 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 				oos.writeObject(formaAux);
 				formaAux = it.proximo();
 			}
+
 			oos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-
 		}
 	}
 
 	public void lerSerial(File file) {
-		// Criar um metodo na lista para realizar a operação//
+		// Criar um método na lista para realizar esta operação
 		while (!listaFormaGeometrica.isVazia()) {
 			listaFormaGeometrica.removerInicio();
 		}
 
-		FormaGeometrica formaAux= null;
+		FormaGeometrica formaAux = null;
 		ObjectInputStream ois = null;
 		
 		try {
-			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-			while (true) {// para quando chegar no final do arquivo//
+			ois = new ObjectInputStream(new FileInputStream(file));
+			while (true) {
 				formaAux = (FormaGeometrica) ois.readObject();
+				
+				listaFormaGeometrica.inserirFim(formaAux);
 			}
-		} catch (EOFException e) {
-			
+		} catch (EOFException endOfFileException) {
+			try {
+				ois.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // fim do arquivo foi alcançado
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,7 +97,6 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public void setFormaGeometrica(FormaGeometrica forma) {
@@ -181,5 +189,49 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 	public void mouseMoved(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void salvarText(File f) {
+		FileWriter output;
+		
+		try {
+			output = new FileWriter(f);
+			
+			FormaGeometrica formaAux;
+			Iterador<FormaGeometrica> it = listaFormaGeometrica.getInicio();
+
+			formaAux = it.getObjeto();
+			while (formaAux != null) {
+				output.append(formaAux.getClass().getSimpleName()+" "+ formaAux.toString());
+				formaAux = it.proximo();
+			}
+
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		}
+	
+	public void abrirtext(File f) {
+		Scanner input=null;
+		
+		while (!listaFormaGeometrica.isVazia()) {
+			listaFormaGeometrica.removerInicio();
+		}
+		
+				
+		try {
+		 input = new Scanner(f);
+		 while (input.hasNextLine()) {
+			 	String str = input.nextLine();
+				FormaGeometrica formaAux = FabricaFormas.fabricarFormaGeometrica(str);
+				
+				listaFormaGeometrica.inserirFim(formaAux);
+			 //System.out.println(input.nextLine());
+			}
+		 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 }

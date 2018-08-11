@@ -111,10 +111,38 @@ public class JanelaDesenho extends JFrame {
 					return;
 				
 				contentPane.lerSerial(f);
+				contentPane.repaint();
 			}
 			
 		});
 		mnArquivo.add(mntmAbrirler);
+		
+		JMenuItem mntmSalvartext = new JMenuItem("Salvar(text)");
+		mntmSalvartext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				File f = escolherArquivo();
+				
+				if( f==null)
+					return;
+				
+				contentPane.salvarText(f);
+			}
+		});
+		mnArquivo.add(mntmSalvartext);
+		
+		JMenuItem mntmAbrirtext = new JMenuItem("Abrir (text)");
+		mntmAbrirtext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				File f = escolherArquivo();
+				
+				if( f==null)
+					return;
+				
+				contentPane.abrirtext(f);
+			}
+		});
+		mnArquivo.add(mntmAbrirtext);
 		
 	}
 	

@@ -60,6 +60,12 @@ public class Retangulo implements FormaGeometrica {
 	}
 
 	@Override
+	public String toString(){
+		return a.toString() + b.toString();
+	}
+
+	
+	@Override
 	public ManipuladorFormaGeometrica getManipulador() {
 		return new ManipuladorRetangulo(this);
 	}
