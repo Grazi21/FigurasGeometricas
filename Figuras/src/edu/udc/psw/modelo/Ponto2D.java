@@ -1,10 +1,13 @@
 package edu.udc.psw.modelo;
 
+import java.nio.ByteBuffer;
+
 import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
 import edu.udc.psw.modelo.manipulador.ManipuladorPonto2D;
 
 public class Ponto2D implements FormaGeometrica {
 	
+	public static final long serialVersionUID = 2L;
 	private double x;
 	private double y;
 
@@ -48,6 +51,14 @@ public class Ponto2D implements FormaGeometrica {
 	public String toString(){
 		return String.format("(%.2f; %.2f)", x, y);
 	}
+	
+	public byte[] toArray() {
+		byte [] bytes = new byte [16];
+		ByteBuffer.wrap(bytes,0,8).putDouble(x);
+		ByteBuffer.wrap(bytes,8,8).putDouble(y);
+		return bytes;
+	}
+	
 
 	@Override
 	public Ponto2D centro() {
@@ -77,6 +88,11 @@ public class Ponto2D implements FormaGeometrica {
 	@Override
 	public ManipuladorFormaGeometrica getManipulador() {
 		return new ManipuladorPonto2D(this);
+	}
+
+	@Override
+	public long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
 }

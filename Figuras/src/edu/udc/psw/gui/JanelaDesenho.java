@@ -89,10 +89,10 @@ public class JanelaDesenho extends JFrame {
 		JMenu mnArquivo = new JMenu("Arquivo");
 		menuBar.add(mnArquivo);
 		
-		JMenuItem mntmSalvar = new JMenuItem("Salvar");
+		JMenuItem mntmSalvar = new JMenuItem("Salvar (serial)");
 		mntmSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File f = escolherArquivo();
+				File f = escolherArquivo(true);
 				
 				if( f==null)
 					return;
@@ -102,10 +102,10 @@ public class JanelaDesenho extends JFrame {
 		});
 		mnArquivo.add(mntmSalvar);
 		
-		JMenuItem mntmAbrirler = new JMenuItem("Abrir (Ler)");
+		JMenuItem mntmAbrirler = new JMenuItem("Abrir (serial)");
 		mntmAbrirler.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				File f = escolherArquivo();		
+				File f = escolherArquivo(false);		
 				
 				if( f==null)
 					return;
@@ -117,10 +117,10 @@ public class JanelaDesenho extends JFrame {
 		});
 		mnArquivo.add(mntmAbrirler);
 		
-		JMenuItem mntmSalvartext = new JMenuItem("Salvar(text)");
+		JMenuItem mntmSalvartext = new JMenuItem("Salvar(texto)");
 		mntmSalvartext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				File f = escolherArquivo();
+				File f = escolherArquivo(true);
 				
 				if( f==null)
 					return;
@@ -130,11 +130,11 @@ public class JanelaDesenho extends JFrame {
 		});
 		mnArquivo.add(mntmSalvartext);
 		
-		JMenuItem mntmAbrirtext = new JMenuItem("Abrir (text)");
+		JMenuItem mntmAbrirtext = new JMenuItem("Abrir (texto)");
 		mntmAbrirtext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				File f = escolherArquivo();
+				File f = escolherArquivo(false);
 				
 				if( f==null)
 					return;
@@ -144,16 +144,43 @@ public class JanelaDesenho extends JFrame {
 		});
 		mnArquivo.add(mntmAbrirtext);
 		
+		JMenuItem mntmSalvarbinario = new JMenuItem("Salvar (binario)");
+		mntmSalvarbinario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				File f = escolherArquivo(true);
+				
+				if( f==null)
+					return;
+				
+				contentPane.salvarBinario(f);
+			}
+		});
+		mnArquivo.add(mntmSalvarbinario);
+		
+		JMenuItem mntmAbrirbinario = new JMenuItem("Abrir (binario)");
+		mntmAbrirbinario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				File f = escolherArquivo(false);
+				
+				if( f==null)
+					return;
+				
+				contentPane.abrirBinario(f);
+			}
+		});
+		mnArquivo.add(mntmAbrirbinario);
+		
 	}
 	
-	private File escolherArquivo() {
+	private File escolherArquivo(boolean gravar) {
 		JFileChooser fc = new JFileChooser();
 		fc.setCurrentDirectory(new File(System.getProperty("user.home")));
 		
 		FileNameExtensionFilter textFilter = new FileNameExtensionFilter("Serial File", "ser");
 		fc.setFileFilter(textFilter);
 		
-		int result = fc.showOpenDialog(null);
+		int result = gravar? fc.showSaveDialog(null): fc.showOpenDialog(null);
 		if(result == JFileChooser.APPROVE_OPTION) {
 			return fc.getSelectedFile();
 		}

@@ -4,6 +4,8 @@ import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
 import edu.udc.psw.modelo.manipulador.ManipuladorRetangulo;
 
 public class Retangulo implements FormaGeometrica {
+	
+	public static final long serialVersionUID = 1L;
 	private Ponto2D a;
 	private Ponto2D b;
 	
@@ -73,5 +75,10 @@ public class Retangulo implements FormaGeometrica {
 	@Override
 	public Retangulo clone() {
 		return new Retangulo(a, b);
+	}
+
+	@Override
+	public long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 }

@@ -1,13 +1,5 @@
 package edu.udc.psw.gui;
 
-import javax.swing.JPanel;
-
-import edu.udc.psw.modelo.FabricaFormas;
-import edu.udc.psw.modelo.FormaGeometrica;
-import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
-import edu.udc.psw.colecao.Iterador;
-import edu.udc.psw.colecao.ListaEncadeada;
-
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,8 +13,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.Scanner;
+
+import javax.swing.JPanel;
+
+import edu.udc.psw.colecao.Iterador;
+import edu.udc.psw.colecao.ListaEncadeada;
+import edu.udc.psw.modelo.FabricaFormas;
+import edu.udc.psw.modelo.FormaGeometrica;
+import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
 
 public class PainelDesenho extends JPanel implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;
@@ -233,5 +232,32 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void salvarBinario(File f) {
+		FileOutputStream output = null;
+		try {
+		
+		output = new FileOutputStream(f);
+		
+		FormaGeometrica formaAux;
+		Iterador<FormaGeometrica> it = listaFormaGeometrica.getInicio();
+
+		formaAux = it.getObjeto();
+		while (formaAux != null) {
+			output.write((int) (formaAux.getSerialVersionUID()));
+			formaAux = it.proximo();
+		}
+
+		output.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
+
+
+	public void abrirBinario(File f) {
+		// TODO Auto-generated method stub
+		
 	}
 }

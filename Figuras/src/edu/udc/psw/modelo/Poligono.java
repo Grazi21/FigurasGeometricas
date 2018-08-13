@@ -1,6 +1,8 @@
 package edu.udc.psw.modelo;
 
 public class Poligono {
+	
+	public static final long serialVersionUID = 4L;
 		
 	private Ponto2D pontos[] = new Ponto2D[10];
 	private int lados;

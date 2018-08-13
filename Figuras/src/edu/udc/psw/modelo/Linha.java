@@ -4,6 +4,8 @@ import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
 import edu.udc.psw.modelo.manipulador.ManipuladorLinha;
 
 public class Linha implements FormaGeometrica {
+	
+	public static final long serialVersionUID = 3L;
 	private Ponto2D a;
 	private Ponto2D b;
 	
@@ -86,6 +88,11 @@ public class Linha implements FormaGeometrica {
 	@Override
 	public ManipuladorFormaGeometrica getManipulador() {
 		return new ManipuladorLinha(this);
+	}
+
+	@Override
+	public long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
 }
