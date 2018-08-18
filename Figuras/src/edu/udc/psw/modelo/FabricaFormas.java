@@ -48,9 +48,6 @@ public class FabricaFormas {// cria formas geometricas//
 		return r;
 	}
 	
-	public static Ponto2D fabricarPonto2D (byte bytes[]) {
-		return null;
-	}
 	
 	
 	

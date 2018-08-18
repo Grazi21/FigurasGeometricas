@@ -24,6 +24,12 @@ public interface FormaGeometrica extends Serializable { // Serializable - Cria f
 	public ManipuladorFormaGeometrica getManipulador();
 
 	public FormaGeometrica clone();
+
+
+	public static FormaGeometrica fabricarFormaGeometrica(byte[] array) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	//public static byte[] toByteArray(double value) {
 	//	byte[] bytes = new byte [8];

@@ -1,5 +1,7 @@
 package edu.udc.psw.modelo;
 
+import java.nio.ByteBuffer;
+
 import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
 import edu.udc.psw.modelo.manipulador.ManipuladorLinha;
 
@@ -74,6 +76,21 @@ public class Linha implements FormaGeometrica {
 	public String toString(){
 		return a.toString() + b.toString();
 	}
+	
+	public byte[] toArrayA() {
+		byte [] bytes = new byte [16];
+		ByteBuffer.wrap(bytes,0,8).putDouble(a.getX());
+		ByteBuffer.wrap(bytes,8,8).putDouble(a.getY());
+		return bytes;
+	}
+	
+	public byte[] toArrayB() {
+		byte [] bytes = new byte [16];
+		ByteBuffer.wrap(bytes,0,8).putDouble( b.getX());
+		ByteBuffer.wrap(bytes,8,8).putDouble( b.getY());
+		return bytes;
+	}
+	
 
 	@Override
 	public double area() {

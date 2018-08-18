@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 import java.util.Scanner;
 
 import javax.swing.JPanel;
@@ -256,8 +257,30 @@ public class PainelDesenho extends JPanel implements MouseListener, MouseMotionL
 }
 
 
-	public void abrirBinario(File f) {
-		// TODO Auto-generated method stub
+	public byte[] abrirBinario(File f){
+		FileInputStream input= null;
+					
+	while (!listaFormaGeometrica.isVazia()) {
+		listaFormaGeometrica.removerInicio();
+		}
+	
+		try {				
+		input = new FileInputStream(f);
+		FormaGeometrica formaAux;
+		byte tam[] = new byte [4];
+		byte array [];
+		while(input.read(tam)!=-1 ){
+			array = new byte [ByteBuffer.wrap(tam).getInt()];
+			input.read(array);
+			formaAux= (FormaGeometrica)FormaGeometrica.fabricarFormaGeometrica(array);
+	
+		}
+	}		
+		catch (IOException e){
+		e.printStackTrace();
+		}
 		
+		return null;
 	}
 }
+	
