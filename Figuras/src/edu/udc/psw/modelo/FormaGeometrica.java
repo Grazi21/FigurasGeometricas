@@ -27,7 +27,7 @@ public interface FormaGeometrica extends Serializable { // Serializable - Cria f
 
 
 	public static FormaGeometrica fabricarFormaGeometrica(byte[] array) {
-		// TODO Auto-generated method stub
+	
 		return null;
 	}
 	
