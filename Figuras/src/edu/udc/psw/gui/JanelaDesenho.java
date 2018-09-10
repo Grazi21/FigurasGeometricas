@@ -86,6 +86,7 @@ public class JanelaDesenho extends JFrame {
 		});
 		mnFiguras.add(mntmRetangulo);
 		
+<<<<<<< HEAD
 		JMenuItem mntmCirculo = new JMenuItem("Circulo");
 		mntmCirculo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -107,6 +108,8 @@ public class JanelaDesenho extends JFrame {
 		});
 		mnFiguras.add(mntmPoligono);
 		
+=======
+>>>>>>> branch 'master' of https://github.com/Grazi21/FigurasGeometricas
 		JMenu mnArquivo = new JMenu("Arquivo");
 		menuBar.add(mnArquivo);
 		

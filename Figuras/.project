@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>FigurasGeo</name>
+=======
+	<name>Figuras</name>
+>>>>>>> branch 'master' of https://github.com/Grazi21/FigurasGeometricas
 	<comment></comment>
 	<projects>
 	</projects>
