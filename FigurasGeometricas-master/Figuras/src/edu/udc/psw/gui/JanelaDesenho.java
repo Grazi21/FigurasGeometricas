@@ -99,6 +99,20 @@ public class JanelaDesenho extends JFrame {
 		});
 		mnFiguras.add(mntmRetangulo);
 		
+		JMenuItem mntmCirculo = new JMenuItem("Circulo");
+		mntmCirculo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		mnFiguras.add(mntmCirculo);
+		
+		JMenuItem mntmTriangulo = new JMenuItem("Triangulo");
+		mntmTriangulo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		mnFiguras.add(mntmTriangulo);
+		
 		
 	}
 	

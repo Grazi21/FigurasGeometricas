@@ -1,7 +1,5 @@
 package edu.udc.psw.colecao;
 
-import edu.udc.psw.colecao.ListaEncadeada.ImplementaIterador;
-import edu.udc.psw.colecao.ListaEncadeada.No;
 
 public class ListaEncadeada<TIPO> {
 	private class No {
