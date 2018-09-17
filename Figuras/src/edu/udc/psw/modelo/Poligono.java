@@ -1,5 +1,6 @@
 package edu.udc.psw.modelo;
 
+
 public class Poligono {
 	
 	public static final long serialVersionUID = 4L;

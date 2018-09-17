@@ -1,8 +1,9 @@
 package edu.udc.psw.modelo;
-import java.util.ArrayList;
+
 import java.util.List;
+
+import edu.udc.psw.modelo.FormaGeometrica;
 import edu.udc.psw.modelo.manipulador.ManipuladorFormaGeometrica;
-import edu.udc.psw.modelo.manipulador.ManipuladorCirculo;
 
 public class Triangulo implements FormaGeometrica {
 	protected Ponto2D a;
@@ -13,6 +14,7 @@ public class Triangulo implements FormaGeometrica {
 	protected Ponto2D bT;
 	protected Ponto2D cT;
 	
+
 	public Triangulo() {
 		a = new Ponto2D(0, 0);
 		b = new Ponto2D(0, 0);
@@ -45,34 +47,10 @@ public class Triangulo implements FormaGeometrica {
 				((aT.getX() - cT.getX()) * (bT.getY() - cT.getY()) - (aT.getY() - cT.getY()) * (bT.getX() - cT.getX())) / 2);
 	}
 
-	public void setTransformacao(Transformacao t) {
-		this.t = t;
-		aplicarTransformacao();
-	}
-
-	public void comporTransformacao(Transformacao t) {
-		if(this.t== null) {
-			this.t= Transformacao.getIdentidade();
-		}
-		this.t.compor(t);
-		aplicarTransformacao();
-	}
-
 	
-	public Transformacao getTransformacao() {
-		return t;
-	}
-
-	private void aplicarTransformacao() {
-		float[][] p = t.aplicar(getPontosCoordHom());
-		aT.setCoordHom(p[0]);
-		bT.setCoordHom(p[1]);
-		cT.setCoordHom(p[2]);
-	}
-
 	public void setA(Ponto2D a) {
 		this.a = a;
-		aplicarTransformacao();
+		
 	}
 
 	
@@ -82,7 +60,7 @@ public class Triangulo implements FormaGeometrica {
 
 	public void setB(Ponto2D b) {
 		this.b = b;
-		aplicarTransformacao();
+		
 	}
 
 	
@@ -92,10 +70,10 @@ public class Triangulo implements FormaGeometrica {
 
 	public void setC(Ponto2D c) {
 		this.c = c;
-		aplicarTransformacao();
+		
 	}
 
-
+	
 	public Ponto2D getC() {
 		return c;
 	}
@@ -105,6 +83,37 @@ public class Triangulo implements FormaGeometrica {
 		return new Ponto2D((aT.getX()+bT.getX()+cT.getX())/3, (aT.getY()+bT.getY()+cT.getY())/3);
 	}
 
+	
+	public float getMaxX() {
+		return Math.max(Math.max(aT.getX(), bT.getX()), cT.getX());
+	}
+
+	
+	public float getMinX() {
+		return Math.min(Math.min(aT.getX(), bT.getX()), cT.getX());
+	}
+
+	
+	public float getMaxY() {
+		return Math.max(Math.max(aT.getY(), bT.getY()), cT.getY());
+	}
+
+	
+	public float getMinY() {
+		return Math.min(Math.min(aT.getY(), bT.getY()), cT.getY());
+	}
+
+	
+	public float getLargura() {
+		return Math.abs(getMaxX() - getMinX());
+	}
+
+	
+	public float getAltura() {
+		return Math.abs(getMaxY() - getMinY());
+	}
+
+	
 	public List<Ponto2D> getListPontos() {
 		List<Ponto2D> l = new ArrayList<Ponto2D>();
 		l.add(a);
@@ -120,8 +129,8 @@ public class Triangulo implements FormaGeometrica {
 		a = pontos.get(0);
 		b = pontos.get(1);
 		c = pontos.get(2);
-		aplicarTransformacao();
 	}
+	
 	
 	public float[][] getPontos2D() {
 		float[][] v = new float[3][2];
@@ -147,7 +156,7 @@ public class Triangulo implements FormaGeometrica {
 		a.setCoord2D(v[0]);
 		b.setCoord2D(v[1]);
 		c.setCoord2D(v[2]);
-		aplicarTransformacao();
+		
 	}
 
 	public void setPontosCoordHom(float[][] v) {
@@ -157,54 +166,34 @@ public class Triangulo implements FormaGeometrica {
 		a.setCoordHom(v[0]);
 		b.setCoordHom(v[1]);
 		c.setCoordHom(v[2]);
-		aplicarTransformacao();
+		
+	}
+
+	public void desenhar(DrawUtil du) {
+		du.drawLine(aT, bT);
+		du.drawLine(bT, cT);
+		du.drawLine(aT, cT);
+	}
+	public Manipulador criarManipulador() {
+		return new ManipuladorTriangulo(this);
 	}
 
 	@Override
-	public long getSerialVersionUID() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public Ponto2D centro() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public double area() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double perimetro() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double base() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public double altura() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public ManipuladorFormaGeometrica getManipulador() {
+	public List<Ponto2D> getListPontos() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public FormaGeometrica clone() {
+	public void setListPontos(List<Ponto2D> pontos) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public ManipuladorFormaGeometrica criarManipulador() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+}
