@@ -21,32 +21,32 @@ public class ManipuladorTriangulo implements ManipuladorFormaGeometrica {
 		if (finalizado || cancelado)
 			return;
 		if (click == 0) {
-			triangulo.setA(new Ponto2D(x, y));
-			triangulo.setB(new Ponto2D(x, y));
-			triangulo.setC(new Ponto2D(x, y));
+			triangulo.setX(new Ponto2D(x, y,z));
+			triangulo.setY(new Ponto2D(x, y,z));
+			triangulo.setZ(new Ponto2D(x, y,z));
 			click++;
 		} else if (click == 1) {
-			triangulo.setB(new Ponto2D(x, y));
+			triangulo.setY(new Ponto2D(x, y,z));
 			click++;
 		} else if (click == 2) {
-			triangulo.setC(new Ponto2D(x, y));
+			triangulo.setZ(new Ponto2D(x, y,z));
 			finalizado = true;
 		}
 	}
 
-	public void press(float x, float y) { }
+	public void press(float x, float y, float z) { }
 
-	public void release(float x, float y) { }
+	public void release(float x, float y, float z) { }
 
-	public void drag(float x, float y) { }
+	public void drag(float x, float y, float z) { }
 
-	public void move(float x, float y) {
+	public void move(float x, float y, float z) {
 		if (finalizado || cancelado)
 			return;
 		if (click == 1) {
-			triangulo.setB(new Ponto2D(x, y));
+			triangulo.setY(new Ponto2D(x, y,z));
 		} else if (click == 2) {
-			triangulo.setC(new Ponto2D(x, y));
+			triangulo.setY(new Ponto2Dx, y,z));
 		}
 	}
 
