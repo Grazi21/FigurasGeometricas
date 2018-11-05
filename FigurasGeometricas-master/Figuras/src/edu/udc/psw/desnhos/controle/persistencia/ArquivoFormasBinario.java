@@ -1,4 +1,4 @@
-package edu.udc.psw.desnhos.controle.persistencia;
+package edu.udc.psw.desenhos.controle.persistencia;
 
 import java.io.EOFException;
 import java.io.File;
@@ -13,6 +13,7 @@ import edu.udc.psw.colecao.ListaEncadeada;
 import edu.udc.psw.modelo.FabricaFormas;
 import edu.udc.psw.modelo.FormaGeometrica;
 
+// Classe ConcreteStrategy do padrão Strategy
 public class ArquivoFormasBinario implements ArquivoFormaGeometrica {
 	private File file;
 	
@@ -21,7 +22,7 @@ public class ArquivoFormasBinario implements ArquivoFormaGeometrica {
 		this.file = file;
 	}
 
-
+	// Metodo AlgorithmInterface() da classe ConcreteStrategy do padrão Strategy
 	@Override
 	public ListaEncadeada<FormaGeometrica> lerFormas() {
 		ListaEncadeada<FormaGeometrica> lista = new ListaEncadeada<FormaGeometrica>();
@@ -54,6 +55,7 @@ public class ArquivoFormasBinario implements ArquivoFormaGeometrica {
 		return lista;
 	}
 
+	// Metodo AlgorithmInterface() da classe ConcreteStrategy do padrão Strategy
 	@Override
 	public void salvarFormas(ListaEncadeada<FormaGeometrica> lista) {
 		FileOutputStream output = null;

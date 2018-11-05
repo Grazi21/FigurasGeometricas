@@ -1,6 +1,6 @@
 package edu.udc.psw.colecao;
 
-
+// Classe ConcreteAggregate do padrão Iterator
 public class ListaEncadeada<TIPO> {
 	private class No {
 		public No proximo;
@@ -9,6 +9,7 @@ public class ListaEncadeada<TIPO> {
 		public TIPO dado;
 	};
 
+	// Classe ConcreteIterator do padrão Iterator
 	private class ImplementaIterador implements Iterador<TIPO> {
 		public No noAtual;
 
@@ -57,10 +58,12 @@ public class ListaEncadeada<TIPO> {
 		return false;
 	}
 
+	// Metodo CreateIterator() da classe Aggregate do padrão Iterator
 	public Iterador<TIPO> getInicio() {
 		return new ImplementaIterador(inicio);
 	}
 
+	// Metodo CreateIterator() da classe Aggregate do padrão Iterator
 	public Iterador<TIPO> getFim() {
 		return new ImplementaIterador(fim);
 	}
@@ -200,6 +203,34 @@ public class ListaEncadeada<TIPO> {
 		tamanho--;
 		return dado;
 	}
+	
+	public TIPO remover(TIPO obj) {
+		if (obj == null)
+			return null;
+
+		if (obj == inicio.dado) { // remover inicio
+			return removerInicio();
+		}
+
+		if (obj == fim.dado) { // remover o fim
+			return removerFim();
+		}
+
+		No aux = inicio;
+
+		// remover no do meio da lista
+		while (obj != aux.dado) {
+			aux = aux.proximo;
+		}
+
+		TIPO dado = aux.dado;
+
+		aux.anterior.proximo = aux.proximo;
+		aux.proximo.anterior = aux.anterior;
+
+		tamanho--;
+		return dado;
+	}
 
 	public void removerTudo() {
 		while (inicio != null)
@@ -207,20 +238,35 @@ public class ListaEncadeada<TIPO> {
 	}
 
 	public TIPO pesquisar(int pos) {
-		No aux = inicio;
-		int cont = 1;
-
-		if (tamanho == 0)
+		if (inicio == null)// se a lista está vazia
 			return null;
-
-		if (pos > tamanho)
-			return null;
-
-		while (cont < pos) {
-			aux = aux.proximo;
-			cont++;
+		if (pos == 0)// consulta o primeiro elemento da lista
+			return inicio.dado;
+		else if (pos == tamanho - 1)// consulta o último elemento da lista
+			return fim.dado;
+		else // consulta um elemento no meio da lista
+		{
+			No aux = inicio;
+			while (pos > 0) {
+				aux = aux.proximo;
+				pos--;
+			}
+			return aux.dado;
 		}
-
-		return aux.dado;
+	}
+	
+	public int consulta(TIPO obj) {
+		if(inicio == null)
+			return -1;
+		No aux = inicio;
+		int pos = 0; 
+		while(aux != null)
+		{
+			if(aux.dado == obj)
+				return pos;
+			pos++;
+			aux = aux.proximo;
+		}
+		return -1;
 	}
 }

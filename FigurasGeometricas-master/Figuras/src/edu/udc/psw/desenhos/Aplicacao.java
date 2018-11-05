@@ -1,4 +1,3 @@
-
 package edu.udc.psw.desenhos;
 
 import edu.udc.psw.desenhos.controle.Documento;

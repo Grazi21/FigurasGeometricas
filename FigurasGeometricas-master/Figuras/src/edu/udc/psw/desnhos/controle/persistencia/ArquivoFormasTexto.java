@@ -11,6 +11,7 @@ import edu.udc.psw.colecao.ListaEncadeada;
 import edu.udc.psw.modelo.FabricaFormas;
 import edu.udc.psw.modelo.FormaGeometrica;
 
+//Classe ConcreteStrategy do padrão Strategy
 public class ArquivoFormasTexto implements ArquivoFormaGeometrica {
 	private File file;
 	
@@ -19,7 +20,7 @@ public class ArquivoFormasTexto implements ArquivoFormaGeometrica {
 		this.file = file;
 	}
 
-
+	// Metodo AlgorithmInterface() da classe ConcreteStrategy do padrão Strategy
 	@Override
 	public ListaEncadeada<FormaGeometrica> lerFormas() {
 		ListaEncadeada<FormaGeometrica> lista = new ListaEncadeada<FormaGeometrica>();
@@ -40,6 +41,7 @@ public class ArquivoFormasTexto implements ArquivoFormaGeometrica {
 		return lista;
 	}
 
+	// Metodo AlgorithmInterface() da classe ConcreteStrategy do padrão Strategy
 	@Override
 	public void salvarFormas(ListaEncadeada<FormaGeometrica> lista) {
 		FileWriter output; // objeto utilizado para gerar saída de texto no arquivo
@@ -63,4 +65,3 @@ public class ArquivoFormasTexto implements ArquivoFormaGeometrica {
 	}
 
 }
-
