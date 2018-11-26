@@ -3,16 +3,19 @@ package edu.udc.psw.desenhos.DB.DAO;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.Normalizer.Form;
+
 import edu.udc.psw.desenhos.DB.DBConnection;
 import edu.udc.psw.desenhos.DB.data.Desenhos;
+import edu.udc.psw.desenhos.DB.data.Forma;
 
 public class FormaDAO {
 	private Statement statement;
 	private ResultSet resultSet;
 	private int numberOfRows;
-	private String query = "SELECT desenhos.nome, desenhos.criacao, desenhos.alteracao, desenhos.id_desenho FROM desenhos";
-	private String update = "UPDATE (nome, criacao, alteracao) from desenhos with ";
-	private String insert = "INSERT into desenhos (nome, criacao, alteracao) values ";
+	private String query = "SELECT forma.TipoForma, forma.texto, forma.binario, forma.desenho, forma.id_formas FROM FORMA";
+	private String update = "UPDATE (Tipo Forma, Arq Texto, Arq Binario, Desenho) from desenhos with ";
+	private String insert = "INSERT into forma (Tipo Forma, Arq Texto, Arq Binario, Desenho) values ";
 
 	public FormaDAO() {
 		try {
@@ -34,34 +37,29 @@ public class FormaDAO {
 		}
 	}
 
-	public Desenhos getDesenho() {
-		Desenhos desenhos;
-		try {
-			desenhos = new Desenhos(
-					resultSet.getInt(4),
-					resultSet.getString(1),
-					resultSet.getTimestamp(2),
-					resultSet.getTimestamp(3));
-			return desenhos;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
+	public Forma getTipoForma() {
+		Forma formas;
+		formas = new Forma(
+				((Forma) resultSet).getTipoForma(),
+				numberOfRows, ((Forma) resultSet).getTexto(),
+				((Forma) resultSet).getBinary(),
+				((Forma) resultSet).getDesenho());
+		return formas;
 	}
 
 	public int getNumberOfRows() {
 		return numberOfRows;
 	}
 
-	public void save(Desenhos desenho) throws SQLException, IllegalStateException {
-		String newData = update + "('" + desenho.getNome() + "', '" + desenho.getCriacao() + "', '" 
-				+ desenho.getModificacao() + "')" + " WHERE id_desenho = " + "', '" + desenho.getId() + "');";
+	public void save(Forma forma) throws SQLException, IllegalStateException {
+		String newData = insert + "('" + forma.getTipoForma() + "', '" + forma.getTexto() + "', '"+ forma.getBinary()+ "', '"
+				+ forma.getDesenho() + "')" + " WHERE id_formas = " + "', '" + forma.getId_formas() + "');";
 		statement.executeUpdate(newData);
 	}
 
-	public void insert(Desenhos desenho) throws SQLException, IllegalStateException {
-		String newData = insert + "('" + desenho.getNome() + "', '" + desenho.getCriacao() + "', '" 
-				+ desenho.getModificacao() + "');";
+	public void insert(Forma forma) throws SQLException, IllegalStateException {
+		String newData = insert + "('" + forma.getTipoForma() + "', '" + forma.getTexto() + "', '"+ forma.getBinary()+ "', '"
+				+ forma.getDesenho() + "');";
 		int affectedRows = statement.executeUpdate(newData, Statement.RETURN_GENERATED_KEYS);
 		
         if (affectedRows == 0) {
@@ -70,7 +68,7 @@ public class FormaDAO {
 
         try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
             if (generatedKeys.next()) {
-                desenho.setId(generatedKeys.getLong(1));
+                forma.setId_formas(generatedKeys.getLong(1));
             }
             else {
                 throw new SQLException("Creating user failed, no ID obtained.");

@@ -9,17 +9,20 @@ public class TipoForma {
 
 		public TipoForma(long id) {
 			this.id_tipo = id_tipo;
-			nome = "Triangulo"+"Retangulo"+"Linha"+"Ponto"+"Quadrado";
-			
-			
-		}
-
+			nome = ("1,Ponto")||("2,Linha")||("3,Retangulo")||("4,Circulo")||("5,Triangulo"); 			
+							
+	}
+		
 	public TipoForma(long id, String nome, int qdt_pontos,int qdt_escalares) {
 			this.id_tipo = id_tipo;
 			this.nome = nome;
 			this.qtd_pontos = qtd_pontos;
 			this.qtd_escalares = qtd_escalares;
 		}
+
+	public TipoForma(String nome2, TipoForma resultSet) {
+		// TODO Auto-generated constructor stub
+	}
 
 	public long getId_tipo() {
 		return id_tipo;
@@ -39,10 +42,11 @@ public class TipoForma {
 
 	public int getQtd_pontos() {
 		return qtd_pontos;
-	}
+		
+	}	
 
 	public void setQtd_pontos(int qtd_pontos) {
-		this.qtd_pontos = qtd_pontos;
+			this.qtd_pontos = qtd_pontos;
 	}
 
 	public int getQtd_escalares() {

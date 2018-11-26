@@ -18,23 +18,30 @@ USE `desenhos`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `circulos`
+-- Table structure for table `tipos_formas`
 --
 
-DROP TABLE IF EXISTS `circulos`;
+DROP TABLE IF EXISTS `tipos_formas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `circulos` (
-  `id_circulo` int(11) NOT NULL AUTO_INCREMENT,
-  `x` double NOT NULL,
-  `y` double NOT NULL,
-  `raio` double NOT NULL,
-  `forma` int(11) NOT NULL,
-  PRIMARY KEY (`id_circulo`),
-  KEY `fk_forma_circulo_idx` (`forma`),
-  CONSTRAINT `fk_forma_circulo` FOREIGN KEY (`forma`) REFERENCES `formas` (`id_formas`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `tipos_formas` (
+  `id_tipo` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `qtd_pontos` tinyint(4) DEFAULT NULL,
+  `qtd_escalares` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id_tipo`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipos_formas`
+--
+
+LOCK TABLES `tipos_formas` WRITE;
+/*!40000 ALTER TABLE `tipos_formas` DISABLE KEYS */;
+INSERT INTO `tipos_formas` VALUES (1,'Ponto',1,0),(2,'Linha',2,0),(3,'Retangulo',2,0),(4,'Circulo',1,1),(5,'Triangulo',3,0);
+/*!40000 ALTER TABLE `tipos_formas` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `desenhos`
@@ -51,8 +58,9 @@ CREATE TABLE `desenhos` (
   `id_desenho` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_desenho`),
   UNIQUE KEY `nome_UNIQUE` (`nome`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `formas`
@@ -71,8 +79,26 @@ CREATE TABLE `formas` (
   KEY `desenho_idx` (`desenho`),
   KEY `tipo_idx` (`tipo`),
   CONSTRAINT `desenho` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `tipo` FOREIGN KEY (`tipo`) REFERENCES `tipos_formas` (`id_tipo`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `tipo` FOREIGN KEY (`tipo`) REFERENCES `tipos_formas` (`id_tipo`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `pontos`
+--
+
+DROP TABLE IF EXISTS `pontos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pontos` (
+  `id_ponto` int(11) NOT NULL AUTO_INCREMENT,
+  `x` double NOT NULL,
+  `y` double NOT NULL,
+  `desenho` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_ponto`),
+  KEY `desenho_idx` (`desenho`),
+  CONSTRAINT `fk_ponto_desenho` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,27 +117,10 @@ CREATE TABLE `linhas` (
   `desenho` int(11) NOT NULL,
   PRIMARY KEY (`id_linha`),
   KEY `fk_desenho_idx` (`desenho`),
-  CONSTRAINT `fk_linha_desenho` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_linha_desenho` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `pontos`
---
-
-DROP TABLE IF EXISTS `pontos`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `pontos` (
-  `id_ponto` int(11) NOT NULL AUTO_INCREMENT,
-  `x` double NOT NULL,
-  `y` double NOT NULL,
-  `desenho` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_ponto`),
-  KEY `desenho_idx` (`desenho`),
-  CONSTRAINT `fk_ponto_desenho` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `retangulos`
@@ -129,24 +138,27 @@ CREATE TABLE `retangulos` (
   `desenho` int(11) NOT NULL,
   PRIMARY KEY (`id_retangulo`),
   KEY `fk_desenho_retangulo_idx` (`desenho`),
-  CONSTRAINT `fk_desenho_retangulo` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_desenho_retangulo` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tipos_formas`
+-- Table structure for table `circulos`
 --
 
-DROP TABLE IF EXISTS `tipos_formas`;
+DROP TABLE IF EXISTS `circulos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tipos_formas` (
-  `id_tipo` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) NOT NULL,
-  `qtd_pontos` tinyint(4) DEFAULT NULL,
-  `qtd_escalares` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`id_tipo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `circulos` (
+  `id_circulo` int(11) NOT NULL AUTO_INCREMENT,
+  `x` double NOT NULL,
+  `y` double NOT NULL,
+  `raio` double NOT NULL,
+  `desenho` int(11) NOT NULL,
+  PRIMARY KEY (`id_circulo`),
+  KEY `fk_desenhos_circulo_idx` (`desenho`),
+  CONSTRAINT `fk_circulo_desenho` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,9 +179,11 @@ CREATE TABLE `triangulos` (
   `desenho` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_triangulo`),
   KEY `fk_desenho_triangulo_idx` (`desenho`),
-  CONSTRAINT `fk_desenho_triangulo` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `fk_desenho_triangulo` FOREIGN KEY (`desenho`) REFERENCES `desenhos` (`id_desenho`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -180,4 +194,4 @@ CREATE TABLE `triangulos` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed
+-- Dump completed on 2018-11-03 12:57:48
